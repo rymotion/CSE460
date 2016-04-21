@@ -16,7 +16,9 @@ private:
     static const int MEM_SIZE = 256;
     vector <int> r;
     vector <int> mem;
-    //program counter
+    //REMEMBER TO USE THESE
+    
+public:
     int pc;
     int ir;
     int sr;
@@ -24,16 +26,20 @@ private:
     int base;
     int limit;
     int clock;
-    
-public:
 	//primary constructor for VM
 	VirtualMachine();
-	int runtime();
+	int runtime();//this is going to return the program counter
     int fetch();//this is going to be the instruction regester incrementer
-    void run();
+    void run(.o, .in, .out);
 	void setLess();
     void setEqual();
     void setGreat();
     void rtClock();//runtime clock of the program
 };
 #endif
+
+/*
+    two formats:
+    OP RD I RS Unused
+    OP RD I ADDR/CONST
+*/

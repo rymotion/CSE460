@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <stdio.h>
 #include <fstream>
 #include <map>
 #include <stdexcept>
@@ -14,16 +15,26 @@
 
 using namespace std;
 
-class Assembler {
-private:
-	vector <int> instruction;
+class NullPointerException: public runtime_error{
 public:
-	Assembler();
-	//	This should return a binary vector
-	void translate(string OPc);
-	//	this is the opcode string that the
-	int assemble();
-	//	opcode and their functions
+	NullPointerException(): runtime_error("NULL Pointer"){
+
+	} 
+};
+
+class Assembler{
+
+	typedef void (Assembler::*FP)(string);
+private:
+	//map <string, int> instruction;
+	int pc;
+    int ir;
+    int sr;
+    int sp;
+    int base;
+    int limit;
+    int clock;//	This one I will replace
+	//	opcodes and their functions
 	void load();
 	void loadi();
 	void store();
@@ -63,5 +74,14 @@ public:
 	void write();
 	void halt();
 	void noop();
+public:
+	int i;
+	int OP;
+	int reg;
+	int other;
+	bool eof;
+	Assembler();
+	//	this is the opcode string that the
+	int assemble(FILE * opFile, FILE * ouFile);
 };
 #endif
