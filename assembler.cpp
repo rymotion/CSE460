@@ -38,139 +38,139 @@ Assembler::Assembler(FILE * iFile)
 		str >> opcode;
 		if (opcode == "load")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "loadi")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "store")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "add")
 		{
-			//str >> rd >> rs;
+			str >> rd >> rs;
 		}
 		else if (opcode == "addi")
 		{
-			//str >> rd >> constant;
+			str >> rd >> constant;
 		}
 		else if (opcode == "addc")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "addci")
 		{
-			//cout << "Some other opcode: ";
+			str >> >>;
 		}
 		else if (opcode == "sub")
 		{
-
+			str >> >>;
 		}
 		else if (opcode == "subi")
 		{
-
+			str >> >>;
 		}
 		else if (opcode == "subc")
 		{
-
+			str >> >>;
 		}
 		else if (opcode == "subci")
 		{
-
+			str >> >>;
 		}
 		else if (opcode == "and")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "andi")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "xor")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "xori")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "compl")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "shl")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "shla")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "shr")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "shra")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "compr")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "compri")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "getstat")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "putstat")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "jump")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "jumpl")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "jumpe")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "jumpg")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "call")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "return")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "read")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "write")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "halt")
 		{
-			/* code */
+			str >> >>;
 		}
 		else if (opcode == "noop")
 		{
-			/* code */
+			str >> >>;
 		}
 
 
