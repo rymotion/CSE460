@@ -14,7 +14,7 @@
 
 using namespace std;
 
-Assembler::Assembler(FILE * iFile)
+Assembler::Assembler()
 {
 	FILE * imFile; //This is the name of the imported file 
 	iFile = imFile
@@ -39,138 +39,172 @@ Assembler::Assembler(FILE * iFile)
 		if (opcode == "load")
 		{
 			str >> >>;
+			Assembler::load();
 		}
 		else if (opcode == "loadi")
 		{
 			str >> >>;
+			Assembler::loadi();
 		}
 		else if (opcode == "store")
 		{
 			str >> >>;
+			Assembler::store();
 		}
 		else if (opcode == "add")
 		{
 			str >> rd >> rs;
+			Assembler::add();
 		}
 		else if (opcode == "addi")
 		{
 			str >> rd >> constant;
+			Assembler::addi();
 		}
 		else if (opcode == "addc")
 		{
 			str >> >>;
+			Assembler::addc();
 		}
 		else if (opcode == "addci")
 		{
 			str >> >>;
+			Assembler::addci();
 		}
 		else if (opcode == "sub")
 		{
 			str >> >>;
+			Assembler::sub();
 		}
 		else if (opcode == "subi")
 		{
 			str >> >>;
+			Assembler::subi();
 		}
 		else if (opcode == "subc")
 		{
 			str >> >>;
+			Assembler::subc();
 		}
 		else if (opcode == "subci")
 		{
 			str >> >>;
+			Assembler::subci();
 		}
 		else if (opcode == "and")
 		{
 			str >> >>;
+			Assembler::sysand();
 		}
 		else if (opcode == "andi")
 		{
 			str >> >>;
+			Assembler::andi();
 		}
 		else if (opcode == "xor")
 		{
 			str >> >>;
+			Assembler::sysxor();
 		}
 		else if (opcode == "xori")
 		{
 			str >> >>;
+			Assembler::xori();
 		}
 		else if (opcode == "compl")
 		{
 			str >> >>;
+			Assembler::syscompl();
 		}
 		else if (opcode == "shl")
 		{
 			str >> >>;
+			Assembler::shl();
 		}
 		else if (opcode == "shla")
 		{
 			str >> >>;
+			Assembler::shla();
 		}
 		else if (opcode == "shr")
 		{
 			str >> >>;
+			Assembler::shr();
 		}
 		else if (opcode == "shra")
 		{
 			str >> >>;
+			Assembler::shra();
 		}
 		else if (opcode == "compr")
 		{
 			str >> >>;
+			Assembler::compr();
 		}
 		else if (opcode == "compri")
 		{
 			str >> >>;
+			Assembler::compri();
 		}
 		else if (opcode == "getstat")
 		{
 			str >> >>;
+			Assembler::getstat();
 		}
 		else if (opcode == "putstat")
 		{
 			str >> >>;
+			Assembler::putstat();
 		}
 		else if (opcode == "jump")
 		{
 			str >> >>;
+			Assembler::jump();
 		}
 		else if (opcode == "jumpl")
 		{
 			str >> >>;
+			Assembler::jumpl();
 		}
 		else if (opcode == "jumpe")
 		{
 			str >> >>;
+			Assembler::jumpe();
 		}
 		else if (opcode == "jumpg")
 		{
-			str >> >>;
+			str >> >>; 
+			Assembler::jumpg();
 		}
 		else if (opcode == "call")
 		{
-			str >> >>;
+			str >> >>; 
+			Assembler::call();
 		}
 		else if (opcode == "return")
 		{
-			str >> >>;
+			str >> >>; 
+			Assembler::sysreturn();
 		}
 		else if (opcode == "read")
 		{
-			str >> >>;
+			str >> >>; 
+			Assembler::read();
 		}
 		else if (opcode == "write")
 		{
-			str >> >>;
+			str >> >>; 
+			Assembler::write();
 		}
 		else if (opcode == "halt")
 		{
-			str >> >>;
+			str >> >>; 
+			Assembler::halt();
 		}
 		else if (opcode == "noop")
 		{
-			str >> >>;
+			str >> >>; 
+			Assembler::noop();
 		}
 
 
@@ -181,22 +215,201 @@ Assembler::Assembler(FILE * iFile)
 
 int Assembler::assemble(FILE * opFile, FILE * ouFile)
 {	
-	char opcode[8];
-	FILE * infp = opFile;
-	int OP;
-	int i;
-	int line = 0;
-	eof = false;
-	do{
-		fscanf(infp,"%s,%d,%d", opcode, &reg, &other);
-		Assembler::Assembler(opcode);
-		line++;
+	FILE * imFile; //This is the name of the imported file 
+	iFile = imFile
 
+	fstream assemblyProg;
+	string line, opcode;
+	int rd, rs, constant;
+
+	assemblyProg.open(imFile, ios::in);
+	if (!assemblyProg.is_open()) {
+		cout << "Your .s failed to open.\n";
+		exit(1);
 	}
-	while(!eof && infp -> fopen()){
-		fclose(fp);
+
+	getline(assemblyProg, line);
+	while (!assemblyProg.eof()) {
+		rd=-1; rs=-1; constant=-129; // init to invalid values
+
+		// the following line is the trick
+		istringstream str(line.c_str());
+		str >> opcode;
+		if (opcode == "load")
+		{
+			str >> >>;
+			Assembler::load();
+		}
+		else if (opcode == "loadi")
+		{
+			str >> >>;
+			Assembler::loadi();
+		}
+		else if (opcode == "store")
+		{
+			str >> >>;
+			Assembler::store();
+		}
+		else if (opcode == "add")
+		{
+			str >> rd >> rs;
+			Assembler::add();
+		}
+		else if (opcode == "addi")
+		{
+			str >> rd >> constant;
+			Assembler::addi();
+		}
+		else if (opcode == "addc")
+		{
+			str >> >>;
+			Assembler::addc();
+		}
+		else if (opcode == "addci")
+		{
+			str >> >>;
+			Assembler::addci();
+		}
+		else if (opcode == "sub")
+		{
+			str >> >>;
+			Assembler::sub();
+		}
+		else if (opcode == "subi")
+		{
+			str >> >>;
+			Assembler::subi();
+		}
+		else if (opcode == "subc")
+		{
+			str >> >>;
+			Assembler::subc();
+		}
+		else if (opcode == "subci")
+		{
+			str >> >>;
+			Assembler::subci();
+		}
+		else if (opcode == "and")
+		{
+			str >> >>;
+			Assembler::sysand();
+		}
+		else if (opcode == "andi")
+		{
+			str >> >>;
+			Assembler::andi();
+		}
+		else if (opcode == "xor")
+		{
+			str >> >>;
+			Assembler::sysxor();
+		}
+		else if (opcode == "xori")
+		{
+			str >> >>;
+			Assembler::xori();
+		}
+		else if (opcode == "compl")
+		{
+			str >> >>;
+			Assembler::syscompl();
+		}
+		else if (opcode == "shl")
+		{
+			str >> >>;
+			Assembler::shl();
+		}
+		else if (opcode == "shla")
+		{
+			str >> >>;
+			Assembler::shla();
+		}
+		else if (opcode == "shr")
+		{
+			str >> >>;
+			Assembler::shr();
+		}
+		else if (opcode == "shra")
+		{
+			str >> >>;
+			Assembler::shra();
+		}
+		else if (opcode == "compr")
+		{
+			str >> >>;
+			Assembler::compr();
+		}
+		else if (opcode == "compri")
+		{
+			str >> >>;
+			Assembler::compri();
+		}
+		else if (opcode == "getstat")
+		{
+			str >> >>;
+			Assembler::getstat();
+		}
+		else if (opcode == "putstat")
+		{
+			str >> >>;
+			Assembler::putstat();
+		}
+		else if (opcode == "jump")
+		{
+			str >> >>;
+			Assembler::jump();
+		}
+		else if (opcode == "jumpl")
+		{
+			str >> >>;
+			Assembler::jumpl();
+		}
+		else if (opcode == "jumpe")
+		{
+			str >> >>;
+			Assembler::jumpe();
+		}
+		else if (opcode == "jumpg")
+		{
+			str >> >>; 
+			Assembler::jumpg();
+		}
+		else if (opcode == "call")
+		{
+			str >> >>; 
+			Assembler::call();
+		}
+		else if (opcode == "return")
+		{
+			str >> >>; 
+			Assembler::sysreturn();
+		}
+		else if (opcode == "read")
+		{
+			str >> >>; 
+			Assembler::read();
+		}
+		else if (opcode == "write")
+		{
+			str >> >>; 
+			Assembler::write();
+		}
+		else if (opcode == "halt")
+		{
+			str >> >>; 
+			Assembler::halt();
+		}
+		else if (opcode == "noop")
+		{
+			str >> >>; 
+			Assembler::noop();
+		}
+
+		//this last line will put the shit into the output file
+		cout << opcode << " " << rd << " " << rs << " " << constant << endl;
+		getline(assemblyProg, line);
 	}
-	//write something here that ignores comments
 	return 1;
 }
 //opcode and their functions

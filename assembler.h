@@ -79,7 +79,6 @@ public:
 	int OP;
 	int reg;
 	int other;
-	bool eof;
 	Assembler();
 	//	this is the opcode string that the
 	int assemble(FILE * opFile, FILE * ouFile);
