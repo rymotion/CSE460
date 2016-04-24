@@ -14,150 +14,169 @@
 
 using namespace std;
 
-Assembler::Assembler(string OPc)
+Assembler::Assembler(FILE * iFile)
 {
-	string temp = OPc;
+	FILE * imFile; //This is the name of the imported file 
+	iFile = imFile
 
-		/*switch(temp){
+	fstream assemblyProg;
+	string line, opcode;
+	int rd, rs, constant;
 
-		case 'load':
-			&Assembler::load();
-			break;
+	assemblyProg.open(imFile, ios::in);
+	if (!assemblyProg.is_open()) {
+		cout << "Your .s failed to open.\n";
+		exit(1);
+	}
 
-		case 'loadi':
-			&Assembler::loadi();
-			break;
+	getline(assemblyProg, line);
+	while (!assemblyProg.eof()) {
+		rd=-1; rs=-1; constant=-129; // init to invalid values
 
-		case 'store':
-			&Assembler::store();
-			break;
+		// the following line is the trick
+		istringstream str(line.c_str());
+		str >> opcode;
+		if (opcode == "load")
+		{
+			/* code */
+		}
+		else if (opcode == "loadi")
+		{
+			/* code */
+		}
+		else if (opcode == "store")
+		{
+			/* code */
+		}
+		else if (opcode == "add")
+		{
+			//str >> rd >> rs;
+		}
+		else if (opcode == "addi")
+		{
+			//str >> rd >> constant;
+		}
+		else if (opcode == "addc")
+		{
+			/* code */
+		}
+		else if (opcode == "addci")
+		{
+			//cout << "Some other opcode: ";
+		}
+		else if (opcode == "sub")
+		{
 
-		case 'add':
-			&Assembler::add();
-			break;
+		}
+		else if (opcode == "subi")
+		{
 
-		case 'addi':
-			&Assembler::addi();
-			break;
+		}
+		else if (opcode == "subc")
+		{
 
-		case 'addc':
-			&Assembler::addc();
-			break;
+		}
+		else if (opcode == "subci")
+		{
 
-		case 'addci':
-			&Assembler::addci();
-			break;
+		}
+		else if (opcode == "and")
+		{
+			/* code */
+		}
+		else if (opcode == "andi")
+		{
+			/* code */
+		}
+		else if (opcode == "xor")
+		{
+			/* code */
+		}
+		else if (opcode == "xori")
+		{
+			/* code */
+		}
+		else if (opcode == "compl")
+		{
+			/* code */
+		}
+		else if (opcode == "shl")
+		{
+			/* code */
+		}
+		else if (opcode == "shla")
+		{
+			/* code */
+		}
+		else if (opcode == "shr")
+		{
+			/* code */
+		}
+		else if (opcode == "shra")
+		{
+			/* code */
+		}
+		else if (opcode == "compr")
+		{
+			/* code */
+		}
+		else if (opcode == "compri")
+		{
+			/* code */
+		}
+		else if (opcode == "getstat")
+		{
+			/* code */
+		}
+		else if (opcode == "putstat")
+		{
+			/* code */
+		}
+		else if (opcode == "jump")
+		{
+			/* code */
+		}
+		else if (opcode == "jumpl")
+		{
+			/* code */
+		}
+		else if (opcode == "jumpe")
+		{
+			/* code */
+		}
+		else if (opcode == "jumpg")
+		{
+			/* code */
+		}
+		else if (opcode == "call")
+		{
+			/* code */
+		}
+		else if (opcode == "return")
+		{
+			/* code */
+		}
+		else if (opcode == "read")
+		{
+			/* code */
+		}
+		else if (opcode == "write")
+		{
+			/* code */
+		}
+		else if (opcode == "halt")
+		{
+			/* code */
+		}
+		else if (opcode == "noop")
+		{
+			/* code */
+		}
 
-		case 'sub':
-			&Assembler::sub();
-			break;
 
-		case 'subi':
-			&Assembler::subi();
-			break;
-
-		case 'subc':
-			&Assembler::subc();
-			break;
-
-		case 'subci':
-			&Assembler::subci();
-			break;
-
-		case 'and':
-			&Assembler::sysand();
-			break;
-
-		case 'andi':
-			&Assembler::andi();
-			break;
-
-		case 'xor':
-			&Assembler::sysxor();
-			break;
-
-		case 'xori':
-			&Assembler::xori();
-			break;
-
-		case 'compl':
-			&Assembler::syscompl();
-			break;
-
-		case 'shl':
-			&Assembler::shl();
-			break;
-
-		case 'shla':
-			&Assembler::shla();
-			break;
-
-		case 'shr':
-			&Assembler::shr();
-			break;
-
-		case 'shra':
-			&Assembler::shra();
-			break;
-
-		case 'compr':
-			&Assembler::compr();
-			break;
-
-		case 'compri':
-			&Assembler::compri();
-			break;
-
-		case 'getstat':
-			&Assembler::getstat();
-			break;
-
-		case 'putstat':
-			&Assembler::putstat();
-			break;
-
-		case 'jump':
-			&Assembler::jump();
-			break;
-
-		case 'jumpl':
-			&Assembler::jumpl();
-			break;
-
-		case 'jumpe':
-			&Assembler::jumpe();
-			break;
-
-		case 'jumpg':
-			&Assembler::jumpg();
-			break;
-
-		case 'call':
-			&Assembler::call();
-			break;
-
-		case 'return':
-			&Assembler::sysreturn();
-			break;
-
-		case 'read':
-			&Assembler::read();
-			break;
-
-		case 'write':
-			&write();
-			break;
-
-		case 'halt':
-			&Assembler::halt();
-			break;
-
-		case 'noop':
-			&Assembler::noop();
-			break;
-	
-		}*/
-	instr
+		cout << opcode << " " << rd << " " << rs << " " << constant << endl;
+		getline(assemblyProg, line);
+	}
 }
 
 int Assembler::assemble(FILE * opFile, FILE * ouFile)
@@ -382,35 +401,4 @@ void Assembler::noop()
 {
 	OP = 25;
 	clock++;
-}
-
-main()
-{
-	fstream assemblyProg;
-	string line, opcode;
-	int rd, rs, constant;
-
-	assemblyProg.open("prog.s", ios::in);
-	if (!assemblyProg.is_open()) {
-		cout << "prog.s failed to open.\n";
-		exit(1);
-	}
-
-	getline(assemblyProg, line);
-	while (!assemblyProg.eof()) {
-		rd=-1; rs=-1; constant=-129; // init to invalid values
-
-		// the following line is the trick
-		istringstream str(line.c_str());
-		str >> opcode;
-
-		if (opcode == "add")
-			str >> rd >> rs;
-		else if (opcode == "addi")
-			str >> rd >> constant;
-		else cout << "Some other opcode: ";
-
-		cout << opcode << " " << rd << " " << rs << " " << constant << endl;
-		getline(assemblyProg, line);
-	}
 }
