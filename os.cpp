@@ -1,6 +1,7 @@
 //testbench
 //Ryan Paglinawan
-
+//CSE 460
+//CalState San Bernardino
 #include "virtualmachine.h"
 #include "assembler.h"
 #include <iostream>
@@ -10,6 +11,7 @@
 #include <stdlib.h>
 #include <fstream>
 #include <map>
+#include <bitset>
 
 using namespace std;
 
@@ -17,22 +19,33 @@ int main(int argc, char const *argv[])
 {
 	Assembler as;
 	VirtualMachine vm;
+	
 	//open *.s for input AKA argv[1]
 	//open *.o four output AKA argv[]
-	FILE * inF;
-	FILE * outF;
+	
+	std::fstream inF;
+	std::fstream outF;
+	std::fstream inObj;
+	std::fstream outObj;
+	char outputFile[] = "ouFt.o";
+	char inputObject[] = *outputFile;
+	char outputObject[] = "outOBJ.out";
 
-	outF = stdio::fopen(); 
-	inF = stdio::fopen(argv[1], "w+");
-	as.Assembler::assemble(inF, outF);
-	fclose(inF);
-	fclose(outF);
+	outF.open(outputFile); 
+	inF.open(argv[1]);
+	as.Assembler::assemble(argv[1], outputFile);
+	inF.close();
+	outF.close();
+
 	//close *.o for output on assemble AKA argv[]
 	//open *.o for input for virtual machine AKA argv[]
-	inF = stdio::fopen(argv[1], "w+");
-	outF = stdio::fopen();
-	vm.VirtualMachine::run(inF, .in, outF);
-	fclose(outF);
-	//source file and opbject file
+	
+	inObj.open(inputObject);
+	outObj.open(outputObject);
+	vm.VirtualMachine::run(inObj, outObj);
+	outObj.close();
+	inObj.close();
+
+	//source file and object file
 	return 0;
 }//main os	
