@@ -4,7 +4,6 @@
 //CalState San Bernardino
 #include "virtualmachine.h"
 #include "assembler.h"
-#include <iostream>
 #include <string>
 #include <vector>
 #include <stdio.h>
@@ -12,6 +11,7 @@
 #include <fstream>
 #include <map>
 #include <bitset>
+#include <iostream>
 
 using namespace std;
 
@@ -33,7 +33,11 @@ int main(int argc, char const *argv[])
 
 	outF.open(outputFile); 
 	inF.open(argv[1]);
-	as.Assembler::assemble(argv[1], outputFile);
+	as.Assembler::assemble(inF, outF);
+	if (!assemblyProg) {
+		cout << "Your .s failed to open.\n";
+		exit(1);
+	}
 	inF.close();
 	outF.close();
 

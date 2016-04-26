@@ -1,11 +1,11 @@
 //Assembler
 //Ryan Paglinawan
+//CSE 460
+//CalState San Bernardino
 #include "assembler.h"
-#include "virtualmachine.h"
 #include <map>
 #include <stdexcept>
 #include <vector>
-#include <fstream>
 #include <cstdlib>  // for exit()
 #include <iostream> // for cout, ...
 #include <fstream>  // for fstream::open()
@@ -15,220 +15,61 @@
 using namespace std;
 
 Assembler::Assembler()
-{
-	FILE * imFile; //This is the name of the imported file 
-	iFile = imFile
-
-	fstream assemblyProg;
-	string line, opcode;
-	int rd, rs, constant;
-
-	assemblyProg.open(imFile, ios::in);
-	if (!assemblyProg.is_open()) {
-		cout << "Your .s failed to open.\n";
-		exit(1);
-	}
-
-	getline(assemblyProg, line);
-	while (!assemblyProg.eof()) {
-		rd=-1; rs=-1; constant=-129; // init to invalid values
-
-		// the following line is the trick
-		istringstream str(line.c_str());
-		str >> opcode;
-		if (opcode == "load")
-		{
-			str >> >>;
-			Assembler::load();
-		}
-		else if (opcode == "loadi")
-		{
-			str >> >>;
-			Assembler::loadi();
-		}
-		else if (opcode == "store")
-		{
-			str >> >>;
-			Assembler::store();
-		}
-		else if (opcode == "add")
-		{
-			str >> rd >> rs;
-			Assembler::add();
-		}
-		else if (opcode == "addi")
-		{
-			str >> rd >> constant;
-			Assembler::addi();
-		}
-		else if (opcode == "addc")
-		{
-			str >> >>;
-			Assembler::addc();
-		}
-		else if (opcode == "addci")
-		{
-			str >> >>;
-			Assembler::addci();
-		}
-		else if (opcode == "sub")
-		{
-			str >> >>;
-			Assembler::sub();
-		}
-		else if (opcode == "subi")
-		{
-			str >> >>;
-			Assembler::subi();
-		}
-		else if (opcode == "subc")
-		{
-			str >> >>;
-			Assembler::subc();
-		}
-		else if (opcode == "subci")
-		{
-			str >> >>;
-			Assembler::subci();
-		}
-		else if (opcode == "and")
-		{
-			str >> >>;
-			Assembler::sysand();
-		}
-		else if (opcode == "andi")
-		{
-			str >> >>;
-			Assembler::andi();
-		}
-		else if (opcode == "xor")
-		{
-			str >> >>;
-			Assembler::sysxor();
-		}
-		else if (opcode == "xori")
-		{
-			str >> >>;
-			Assembler::xori();
-		}
-		else if (opcode == "compl")
-		{
-			str >> >>;
-			Assembler::syscompl();
-		}
-		else if (opcode == "shl")
-		{
-			str >> >>;
-			Assembler::shl();
-		}
-		else if (opcode == "shla")
-		{
-			str >> >>;
-			Assembler::shla();
-		}
-		else if (opcode == "shr")
-		{
-			str >> >>;
-			Assembler::shr();
-		}
-		else if (opcode == "shra")
-		{
-			str >> >>;
-			Assembler::shra();
-		}
-		else if (opcode == "compr")
-		{
-			str >> >>;
-			Assembler::compr();
-		}
-		else if (opcode == "compri")
-		{
-			str >> >>;
-			Assembler::compri();
-		}
-		else if (opcode == "getstat")
-		{
-			str >> >>;
-			Assembler::getstat();
-		}
-		else if (opcode == "putstat")
-		{
-			str >> >>;
-			Assembler::putstat();
-		}
-		else if (opcode == "jump")
-		{
-			str >> >>;
-			Assembler::jump();
-		}
-		else if (opcode == "jumpl")
-		{
-			str >> >>;
-			Assembler::jumpl();
-		}
-		else if (opcode == "jumpe")
-		{
-			str >> >>;
-			Assembler::jumpe();
-		}
-		else if (opcode == "jumpg")
-		{
-			str >> >>; 
-			Assembler::jumpg();
-		}
-		else if (opcode == "call")
-		{
-			str >> >>; 
-			Assembler::call();
-		}
-		else if (opcode == "return")
-		{
-			str >> >>; 
-			Assembler::sysreturn();
-		}
-		else if (opcode == "read")
-		{
-			str >> >>; 
-			Assembler::read();
-		}
-		else if (opcode == "write")
-		{
-			str >> >>; 
-			Assembler::write();
-		}
-		else if (opcode == "halt")
-		{
-			str >> >>; 
-			Assembler::halt();
-		}
-		else if (opcode == "noop")
-		{
-			str >> >>; 
-			Assembler::noop();
-		}
-
-
-		cout << opcode << " " << rd << " " << rs << " " << constant << endl;
-		getline(assemblyProg, line);
-	}
+{	
+	/*
+	instr["load"] = &Assembler::load;
+	instr["loadi"] = &Assembler::loadi;
+	instr["store"] = &Assembler::store;
+	instr["add"] = &Assembler::add;
+	instr["addi"] = &Assembler::addi;
+	instr["addc"] = &Assembler::addc;
+	instr["addci"] = &Assembler::addci;
+	instr["sub"] = &Assembler::sub;
+	instr["subi"] = &Assembler::subi;
+	instr["subc"] = &Assembler::subc;
+	instr["subci"] = &Assembler::subci;
+	instr["and"] = &Assembler::sysand;
+	instr["andi"] = &Assembler::andi;
+	instr["xor"] = &Assembler::sysxor;
+	instr["xori"] = &Assembler::xori;
+	instr["compl"] = &Assembler::syscompl;
+	instr["shl"] = &Assembler::shl;
+	instr["shla"] = &Assembler::shla;
+	instr["shr"] = &Assembler::shr;
+	instr["shra"] = &Assembler::shra;
+	instr["compr"] = &Assembler::compr;
+	instr["compri"] = &Assembler::compri;
+	instr["getstat"] = &Assembler::getstat;
+	instr["putstat"] = &Assembler::putstat;
+	instr["jump"] = &Assembler::jump;
+	instr["jumpl"] = &Assembler::jumpl;
+	instr["jumpe"] = &Assembler::jumpe;
+	instr["jumpg"] = &Assembler::jumpg;
+	instr["call"] = &Assembler::call;
+	instr["return"] = &Assembler::sysreturn;
+	instr["read"] = &Assembler::read;
+	instr["write"] = &Assembler::write;
+	instr["halt"] = &Assembler::halt;
+	instr["noop"] = &Assembler::noop;
+	*/
 }
 
-int Assembler::assemble(FILE * opFile, FILE * ouFile)
-{	
-	FILE * imFile; //This is the name of the imported file 
-	iFile = imFile
-
-	fstream assemblyProg;
+int Assembler::assemble(char opFile, char ouFile)
+{
+	char outputFilename[] = "ouFile.o";
 	string line, opcode;
 	int rd, rs, constant;
+	//remember constant is also address or ADDR
 
-	assemblyProg.open(imFile, ios::in);
-	if (!assemblyProg.is_open()) {
+	assemblyProg.open(opFile, ios::in);
+	assemblyOut.open(ouFile, ios::out);
+	if (!assemblyProg) {
 		cout << "Your .s failed to open.\n";
 		exit(1);
 	}
 
-	getline(assemblyProg, line);
+	getline(assemblyProg, line, '!');
+	assemblyProg.ignore();
 	while (!assemblyProg.eof()) {
 		rd=-1; rs=-1; constant=-129; // init to invalid values
 
@@ -237,17 +78,17 @@ int Assembler::assemble(FILE * opFile, FILE * ouFile)
 		str >> opcode;
 		if (opcode == "load")
 		{
-			str >> >>;
+			str >> rd >> constant;
 			Assembler::load();
 		}
 		else if (opcode == "loadi")
 		{
-			str >> >>;
+			str >> rd >> constant;
 			Assembler::loadi();
 		}
 		else if (opcode == "store")
 		{
-			str >> >>;
+			str >> rd >> constant;
 			Assembler::store();
 		}
 		else if (opcode == "add")
@@ -262,356 +103,320 @@ int Assembler::assemble(FILE * opFile, FILE * ouFile)
 		}
 		else if (opcode == "addc")
 		{
-			str >> >>;
+			str >> rd >> rs;
 			Assembler::addc();
 		}
 		else if (opcode == "addci")
 		{
-			str >> >>;
+			str >> rd >> constant;
 			Assembler::addci();
 		}
 		else if (opcode == "sub")
 		{
-			str >> >>;
+			str >> rd >> rs;
 			Assembler::sub();
 		}
 		else if (opcode == "subi")
 		{
-			str >> >>;
+			str >> rd >> constant;
 			Assembler::subi();
 		}
 		else if (opcode == "subc")
 		{
-			str >> >>;
+			str >> rd >> rs;
 			Assembler::subc();
 		}
 		else if (opcode == "subci")
 		{
-			str >> >>;
+			str >> rd >> constant;
 			Assembler::subci();
 		}
 		else if (opcode == "and")
 		{
-			str >> >>;
+			str >> rd >> rs;
 			Assembler::sysand();
 		}
 		else if (opcode == "andi")
 		{
-			str >> >>;
+			str >> rd >> constant;
 			Assembler::andi();
 		}
 		else if (opcode == "xor")
 		{
-			str >> >>;
+			str >> rd >> rs;
 			Assembler::sysxor();
 		}
 		else if (opcode == "xori")
 		{
-			str >> >>;
+			str >> rd >> constant;
 			Assembler::xori();
 		}
 		else if (opcode == "compl")
 		{
-			str >> >>;
+			str >> rd;
 			Assembler::syscompl();
 		}
 		else if (opcode == "shl")
 		{
-			str >> >>;
+			str >> rd;
 			Assembler::shl();
 		}
 		else if (opcode == "shla")
 		{
-			str >> >>;
+			str >> rd;
 			Assembler::shla();
 		}
 		else if (opcode == "shr")
 		{
-			str >> >>;
+			str >> rd;
 			Assembler::shr();
 		}
 		else if (opcode == "shra")
 		{
-			str >> >>;
+			str >> rd;
 			Assembler::shra();
 		}
 		else if (opcode == "compr")
 		{
-			str >> >>;
+			str >> rd >> rs;
 			Assembler::compr();
 		}
 		else if (opcode == "compri")
 		{
-			str >> >>;
+			str >> rd >> constant;
 			Assembler::compri();
 		}
 		else if (opcode == "getstat")
 		{
-			str >> >>;
+			str >> rd;
 			Assembler::getstat();
 		}
 		else if (opcode == "putstat")
 		{
-			str >> >>;
+			str >> rd;
 			Assembler::putstat();
 		}
 		else if (opcode == "jump")
 		{
-			str >> >>;
+			str >> rd >> constant;
 			Assembler::jump();
 		}
 		else if (opcode == "jumpl")
 		{
-			str >> >>;
+			str >> rd >> constant;
 			Assembler::jumpl();
 		}
 		else if (opcode == "jumpe")
 		{
-			str >> >>;
+			str >> rd >> constant;
 			Assembler::jumpe();
 		}
 		else if (opcode == "jumpg")
 		{
-			str >> >>; 
+			str >> rd >> constant; 
 			Assembler::jumpg();
 		}
 		else if (opcode == "call")
 		{
-			str >> >>; 
+			str >> rd >> constant; 
 			Assembler::call();
 		}
 		else if (opcode == "return")
 		{
-			str >> >>; 
+			//should pop and restore VM status
+			//str >> >>; 
 			Assembler::sysreturn();
 		}
 		else if (opcode == "read")
 		{
-			str >> >>; 
+			str >> rd; 
 			Assembler::read();
 		}
 		else if (opcode == "write")
 		{
-			str >> >>; 
+			str >> rd; 
 			Assembler::write();
 		}
 		else if (opcode == "halt")
 		{
-			str >> >>; 
 			Assembler::halt();
+			//execute halt
 		}
 		else if (opcode == "noop")
 		{
-			str >> >>; 
 			Assembler::noop();
 		}
 
-		//this last line will put the shit into the output file
-		cout << opcode << " " << rd << " " << rs << " " << constant << endl;
-		getline(assemblyProg, line);
+		//this last line will put the results into the output file
+		assemblyOut << opcode << " " << rd << " " << rs << " " << constant << endl;
+		getline(assemblyProg, line, '!');
 	}
+	assemblyProg.close();
+	assemblyOut.close();
 	return 1;
 }
 //opcode and their functions
+//	I know these will not work but my original compilition would spit out
+//	a segmetation fault
 void Assembler::load()
 {
-	//r[reg] = mem[ADDR]
-	reg = other;
-	OP = 0;
-	i = 0;
-
+	form = 0b00000;
+	i = 0b0;
 }
 void Assembler::loadi()
-{
-	//r[RD] = CONST
-	OP = 0;
-	i = 1;
+{	
+	form = 0b00000;
+	i = 0b1;
 }
-void Assembler::store()
+void Assembler::store(string)
 {
-	//mem[ADDR] = r[RD]
-
-	OP = 1;
-	i = 1;
+	form = 0b00001;
+	i = 0b1;
 }
 void Assembler::add()
 {
-	//r[RD] = r[RD] + r[RS]
-	OP = 2;
-	i = 0;
+	form = 0b00010;
+	i = 0b0;
 }
 void Assembler::addi()
 {
-	//r[RD] = r[RD] + CONST
-	OP = 2;
-	i = 1; 
+	form = 0b00010;
+	i = 0b1;
 }
 void Assembler::addc()
 {
-	//r[RD] = r[RD] + r[RS] + CARRY
-	OP = 3;
-	i = 0;
+	form = 0b00011;
+	i = 0b0;
 }
 void Assembler::addci()
 {
-	//r[RD] = r[RD] + CONST + CARRY
-	OP = 3;
-	i = 1;
+	form = 0b00011;
+	i = 0b1;
+	
 }
 void Assembler::sub()
 {
-	//r[RD] = r[RD] - r[RS]
-	OP = 4;
-	i = 0;
+	form = 0b00100;
+	i = 0b0;
 }
 void Assembler::subi()
 {
-	//r[RD] = r[RD] - CONST
-	OP = 4;
-	i = 1;
+	form = 0b00100;
+	i = 0b1;
+	
 }
 void Assembler::subc()
-{
-	//r[RD] = r[RD] - r[RS] - CARRY
-	OP = 5;
-	i = 0;
+{	
+	form = 0b00101;
+	i = 0b0;
+	
 }
 void Assembler::subci()
-{
-	//r[RD] = r[RD] - CONST - CARRY
-	OP = 5;
-	i = 1;
+{	
+	form = 0b00101;
+	i = 0b1;
+	
 }
 void Assembler::sysand()
 {
-	//r[RD] = r[RD] & r[RS]
-	OP = 6;
-	i = 0;
+	form = 0b00110;
+	i = 0b0;
 }
 void Assembler::andi()
 {
-	//r[RD] = r[RD] & CONST
-	OP = 6;
-	i = 1;
+	form = 0b00110;
+	i = 0b1;
 }
 void Assembler::sysxor()
 {
-	//r[RD] = r[RD] ^ r[RS]
-	OP = 7;
-	i = 0;
+	form = 0b00111;
+	i = 0b0;
 }
 void Assembler::xori()
 {
-	//r[RD] = r[RD] ^ CONST
-	OP = 7;
-	i = 1;
+	form = 0b00111;
+	i = 0b1;
 }
 void Assembler::syscompl()
 {
-	//r[RD] = ~ r[RD]
-	OP = 8;
+	form = 0b01000;
 }
 void Assembler::shl()
 {
-	//r[RD] = r[RD] << 1, shift-in-bit = 0
-	OP = 9;
+	form = 0b01001;
 }
 void Assembler::shla()
 {
-	OP = 10;
+	form = 0b01010;
 }
-int Assembler::shr()
+void Assembler::shr()
 {
-	//r[RD] = r[RD] >> 1, shift-in-bit = 0
-	OP = 11;
+	form = 0b01011;
 }
-int Assembler::shra()
+void Assembler::shra()
 {
-	OP = 12;
+	form = 0b01100;
 }
 void Assembler::compr()
 {
-	//if r[RD] < r[RS] set LESS reset EQUAL and GREATER; 
-	//if r[RD] == r[RS] set EQUAL reset LESS and GREATER;
-	//if r[RD] > r[RS] set GREATER reset EQUAL and LESS
-	OP = 13;
-	i = 0;
+	form = 0b01101;
+	i = 0b0;
 }
 void Assembler::compri()
 {
-	//if r[RD] < CONST set LESS reset EQUAL and GREATER; 
-	//if r[RD] == CONST set EQUAL reset LESS and GREATER; 
-	//if r[RD] > CONST set GREATER reset EQUAL and LESS
-	OP = 13;
-	i = 1;
-
+	form = 0b01101;
+	i = 0b1;
 }
 void Assembler::getstat()
 {
-	OP = 14;
+	form = 0b01110;
 }
 void Assembler::putstat()
 {
-	OP = 15;
+	form = 0b01111;
 }
 void Assembler::jump()
 {
-	OP = 16;
-	i = 1;
-	pc = reg;
+	form = 0b10000;
+	i = 0b1;
 }
 void Assembler::jumpl()
 {
-	OP = 17;
-	i = 1;
-	if (sr == 8)
-	{
-		pc = reg;
-	}
+	form = 0b10001;
+	i = 0b1;	
 }
 void Assembler::jumpe()
 {
-	OP = 18;
-	i = 1;
-	if (sr == 4)
-	{
-		pc = reg;
-	}
+	form = 0b10010;
+	i = 0b1;
 }
 void Assembler::jumpg()
 {
-	OP = 19;
-	i = 1;
-	if (sr == 2)
-	{
-		pc = reg;
-	}
+	form = 0b10011;
+	i = 0b1;
 }
 void Assembler::call()
 {
-	OP = 20;
-	i = 1;
+	form = 0b10100;
+	i = 0b1;
 }
 void Assembler::sysreturn()
 {
-	OP = 21;
+	form = 0b10101;
 }
 void Assembler::read()
 {
-	OP = 22;
+	form = 0b10110;
 }
 void Assembler::write()
 {	
-	OP = 23;
-	puts();
+	form = 0b10111;
 }
 void Assembler::halt()
 {
-	OP = 24;
-	eof = true;
+	form = 0b11000;
 }
 void Assembler::noop()
 {
-	OP = 25;
-	clock++;
+	form = 0b11001;
 }

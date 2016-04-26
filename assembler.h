@@ -1,6 +1,7 @@
 //	assembler.h
-//	Ryan Paglinawan
-//	CSE 460 
+//Ryan Paglinawan
+//CSE 460
+//CalState San Bernardino
 #ifndef ASSEMBLER_H
 #define ASSEMBLER_H
 #include <iostream>
@@ -12,6 +13,7 @@
 #include <stdexcept>
 #include <vector>
 #include <fstream>
+#include <bitset>
 
 using namespace std;
 
@@ -25,21 +27,13 @@ public:
 class Assembler{
 
 	typedef void (Assembler::*FP)(string);
-private:
-	//map <string, int> instruction;
-	int pc;
-    int ir;
-    int sr;
-    int sp;
-    int base;
-    int limit;
-    int clock;//	This one I will replace
+	map<string, FP> instr;
+	
 	//	opcodes and their functions
 	void load();
 	void loadi();
-	void store();
-	//	These functions will set a CARRY bit to the sr per the SRS
-	void add();
+	void store();	
+	void add(); //	These functions will set a CARRY bit to the sr per the SRS
 	void addi();
 	void addc();
 	void addci();
@@ -52,14 +46,10 @@ private:
 	void sysxor();
 	void xori();
 	void syscompl();
-	//	This function will set the CARRY bit
-	void shl();
-	//	This will be the shift left arithmetic and sign extend 
-	void shla();
-	//	This function will set the CARRY bit
-	void shr();
-	//	This will be the shift left arithmetic and sign extend 
-	void shra();
+	void shl(); //	This function will set the CARRY bit
+	void shla(); //	This will be the shift left arithmetic and sign extend 
+	void shr(); //	This function will set the CARRY bit
+	void shra(); //	This will be the shift left arithmetic and sign extend 
 	void compr();
 	void compri();
 	void getstat();
@@ -75,12 +65,15 @@ private:
 	void halt();
 	void noop();
 public:
+	
 	int i;
-	int OP;
-	int reg;
-	int other;
+    int OP;
+	int sr;
+	ifstream assemblyProg;
+	ofstream assemblyOut;
+	int form;
 	Assembler();
 	//	this is the opcode string that the
-	int assemble(FILE * opFile, FILE * ouFile);
+	int assemble(char opFile, char ouFile);
 };
 #endif
