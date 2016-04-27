@@ -56,20 +56,24 @@ Assembler::Assembler()
 
 int Assembler::assemble(char opFile, char ouFile)
 {
+	//char _opfile = opFile;
+	//char _oufile = ouFile;
 	char outputFilename[] = "ouFile.o";
 	string line, opcode;
 	int rd, rs, constant;
 	//remember constant is also address or ADDR
 
-	assemblyProg.open(opFile, ios::in);
-	assemblyOut.open(ouFile, ios::out);
+	assemblyProg.open(&opFile, ios::in);
+	assemblyOut.open(&ouFile, ios::out);
 	if (!assemblyProg) {
 		cout << "Your .s failed to open.\n";
 		exit(1);
 	}
+	else{
 
-	getline(assemblyProg, line, '!');
-	assemblyProg.ignore();
+
+
+	getline(assemblyProg, line);
 	while (!assemblyProg.eof()) {
 		rd=-1; rs=-1; constant=-129; // init to invalid values
 
@@ -79,147 +83,147 @@ int Assembler::assemble(char opFile, char ouFile)
 		if (opcode == "load")
 		{
 			str >> rd >> constant;
-			Assembler::load();
+			Assembler::load(rd, constant);
 		}
 		else if (opcode == "loadi")
 		{
 			str >> rd >> constant;
-			Assembler::loadi();
+			Assembler::loadi(rd, constant);
 		}
 		else if (opcode == "store")
 		{
 			str >> rd >> constant;
-			Assembler::store();
+			Assembler::store(rd, constant);
 		}
 		else if (opcode == "add")
 		{
 			str >> rd >> rs;
-			Assembler::add();
+			Assembler::add(rd, rs);
 		}
 		else if (opcode == "addi")
 		{
 			str >> rd >> constant;
-			Assembler::addi();
+			Assembler::addi(rd, constant);
 		}
 		else if (opcode == "addc")
 		{
 			str >> rd >> rs;
-			Assembler::addc();
+			Assembler::addc(rd, rs);
 		}
 		else if (opcode == "addci")
 		{
 			str >> rd >> constant;
-			Assembler::addci();
+			Assembler::addci(rd, constant);
 		}
 		else if (opcode == "sub")
 		{
 			str >> rd >> rs;
-			Assembler::sub();
+			Assembler::sub(rd, rs);
 		}
 		else if (opcode == "subi")
 		{
 			str >> rd >> constant;
-			Assembler::subi();
+			Assembler::subi(rd, constant);
 		}
 		else if (opcode == "subc")
 		{
 			str >> rd >> rs;
-			Assembler::subc();
+			Assembler::subc(rd, rs);
 		}
 		else if (opcode == "subci")
 		{
 			str >> rd >> constant;
-			Assembler::subci();
+			Assembler::subci(rd, constant);
 		}
 		else if (opcode == "and")
 		{
 			str >> rd >> rs;
-			Assembler::sysand();
+			Assembler::sysand(rd, rs);
 		}
 		else if (opcode == "andi")
 		{
 			str >> rd >> constant;
-			Assembler::andi();
+			Assembler::andi(rd, constant);
 		}
 		else if (opcode == "xor")
 		{
 			str >> rd >> rs;
-			Assembler::sysxor();
+			Assembler::sysxor(rd, rs);
 		}
 		else if (opcode == "xori")
 		{
 			str >> rd >> constant;
-			Assembler::xori();
+			Assembler::xori(rd, constant);
 		}
 		else if (opcode == "compl")
 		{
 			str >> rd;
-			Assembler::syscompl();
+			Assembler::syscompl(rd);
 		}
 		else if (opcode == "shl")
 		{
 			str >> rd;
-			Assembler::shl();
+			Assembler::shl(rd);
 		}
 		else if (opcode == "shla")
 		{
 			str >> rd;
-			Assembler::shla();
+			Assembler::shla(rd);
 		}
 		else if (opcode == "shr")
 		{
 			str >> rd;
-			Assembler::shr();
+			Assembler::shr(rd);
 		}
 		else if (opcode == "shra")
 		{
 			str >> rd;
-			Assembler::shra();
+			Assembler::shra(rd);
 		}
 		else if (opcode == "compr")
 		{
 			str >> rd >> rs;
-			Assembler::compr();
+			Assembler::compr(rd, rs);
 		}
 		else if (opcode == "compri")
 		{
 			str >> rd >> constant;
-			Assembler::compri();
+			Assembler::compri(rd, constant);
 		}
 		else if (opcode == "getstat")
 		{
-			str >> rd;
-			Assembler::getstat();
+			str >> rd >> rs;
+			Assembler::getstat(rd, rs);
 		}
 		else if (opcode == "putstat")
 		{
-			str >> rd;
-			Assembler::putstat();
+			str >> rd >> rs;
+			Assembler::putstat(rd, rs);
 		}
 		else if (opcode == "jump")
 		{
 			str >> rd >> constant;
-			Assembler::jump();
+			Assembler::jump(rd, constant);
 		}
 		else if (opcode == "jumpl")
 		{
 			str >> rd >> constant;
-			Assembler::jumpl();
+			Assembler::jumpl(rd, constant);
 		}
 		else if (opcode == "jumpe")
 		{
 			str >> rd >> constant;
-			Assembler::jumpe();
+			Assembler::jumpe(rd, constant);
 		}
 		else if (opcode == "jumpg")
 		{
 			str >> rd >> constant; 
-			Assembler::jumpg();
+			Assembler::jumpg(rd, constant);
 		}
 		else if (opcode == "call")
 		{
 			str >> rd >> constant; 
-			Assembler::call();
+			Assembler::call(rd, constant);
 		}
 		else if (opcode == "return")
 		{
@@ -230,12 +234,12 @@ int Assembler::assemble(char opFile, char ouFile)
 		else if (opcode == "read")
 		{
 			str >> rd; 
-			Assembler::read();
+			Assembler::read(rd);
 		}
 		else if (opcode == "write")
 		{
 			str >> rd; 
-			Assembler::write();
+			Assembler::write(rd);
 		}
 		else if (opcode == "halt")
 		{
@@ -246,9 +250,10 @@ int Assembler::assemble(char opFile, char ouFile)
 		{
 			Assembler::noop();
 		}
+	}
 
 		//this last line will put the results into the output file
-		assemblyOut << opcode << " " << rd << " " << rs << " " << constant << endl;
+		assemblyOut << final << endl;
 		getline(assemblyProg, line, '!');
 	}
 	assemblyProg.close();
@@ -258,165 +263,343 @@ int Assembler::assemble(char opFile, char ouFile)
 //opcode and their functions
 //	I know these will not work but my original compilition would spit out
 //	a segmetation fault
-void Assembler::load()
+int Assembler::load(int rd, int constant)
 {
 	form = 0b00000;
 	i = 0b0;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::loadi()
+int Assembler::loadi(int rd, int constant)
 {	
 	form = 0b00000;
 	i = 0b1;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::store(string)
+int Assembler::store(int rd, int constant)
 {
 	form = 0b00001;
 	i = 0b1;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::add()
+int Assembler::add(int rd, int constant)
 {
 	form = 0b00010;
 	i = 0b0;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::addi()
+int Assembler::addi(int rd, int constant)
 {
 	form = 0b00010;
 	i = 0b1;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::addc()
+int Assembler::addc(int rd, int constant)
 {
 	form = 0b00011;
 	i = 0b0;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::addci()
+int Assembler::addci(int rd, int constant)
 {
 	form = 0b00011;
 	i = 0b1;
-	
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::sub()
+int Assembler::sub(int rd, int constant)
 {
 	form = 0b00100;
 	i = 0b0;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::subi()
+int Assembler::subi(int rd, int constant)
 {
 	form = 0b00100;
 	i = 0b1;
-	
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::subc()
+int Assembler::subc(int rd, int constant)
 {	
 	form = 0b00101;
 	i = 0b0;
-	
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::subci()
+int Assembler::subci(int rd, int constant)
 {	
 	form = 0b00101;
 	i = 0b1;
-	
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::sysand()
+int Assembler::sysand(int rd, int constant)
 {
 	form = 0b00110;
 	i = 0b0;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::andi()
+int Assembler::andi(int rd, int constant)
 {
 	form = 0b00110;
 	i = 0b1;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::sysxor()
+int Assembler::sysxor(int rd, int constant)
 {
 	form = 0b00111;
 	i = 0b0;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::xori()
+int Assembler::xori(int rd, int constant)
 {
 	form = 0b00111;
 	i = 0b1;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::syscompl()
+int Assembler::syscompl(int rd)
 {
 	form = 0b01000;
+	i = 0b0;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final <<= 8;
+	return final;
 }
-void Assembler::shl()
+int Assembler::shl(int rd)
 {
 	form = 0b01001;
+	i = 0b0;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final <<= 8;
+	return final;
 }
-void Assembler::shla()
+int Assembler::shla(int rd)
 {
 	form = 0b01010;
+	i = 0b0;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final <<= 8;
+	return final;
 }
-void Assembler::shr()
+int Assembler::shr(int rd)
 {
 	form = 0b01011;
+	i = 0b0;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final <<= 8;
+	return final;
 }
-void Assembler::shra()
+int Assembler::shra(int rd)
 {
 	form = 0b01100;
+	i = 0b0;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final <<= 8;
+	return final;
 }
-void Assembler::compr()
+int Assembler::compr(int rd, int rs)
 {
 	form = 0b01101;
 	i = 0b0;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 2)|rs;
+	final <<= 6;
+	return final;
 }
-void Assembler::compri()
+int Assembler::compri(int rd, int constant)
 {
 	form = 0b01101;
 	i = 0b1;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::getstat()
+int Assembler::getstat(int rd, int rs)
 {
 	form = 0b01110;
+	i = 0b0;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 2)|rs;
+	final <<= 6;
+	return final;
 }
-void Assembler::putstat()
+int Assembler::putstat(int rd, int rs)
 {
 	form = 0b01111;
+	i = 0b0;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 2)|rs;
+	final <<= 6;
+	return final;
 }
-void Assembler::jump()
+int Assembler::jump(int rd, int constant)
 {
 	form = 0b10000;
 	i = 0b1;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::jumpl()
+int Assembler::jumpl(int rd, int constant)
 {
 	form = 0b10001;
-	i = 0b1;	
+	i = 0b1;
+
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;	
 }
-void Assembler::jumpe()
+int Assembler::jumpe(int rd, int constant)
 {
 	form = 0b10010;
 	i = 0b1;
+
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+	return final;
 }
-void Assembler::jumpg()
+int Assembler::jumpg(int rd, int constant)
 {
 	form = 0b10011;
 	i = 0b1;
+
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+
+	return final;
 }
-void Assembler::call()
+int Assembler::call(int rd, int constant)
 {
 	form = 0b10100;
 	i = 0b1;
+	final = form;
+	final = (final << 2)|rd;
+	final = (final << 1)|i;
+	final = (final << 8)|constant;
+
+	return final;
 }
-void Assembler::sysreturn()
+int Assembler::sysreturn()
 {
 	form = 0b10101;
+	final = form;
+	final <<= 11;
+
+	return final;
 }
-void Assembler::read()
+int Assembler::read(int rd)
 {
 	form = 0b10110;
+	final = form;
+	final = (final << 2)|rd;
+	final <<= 9;
+
+	return final;
 }
-void Assembler::write()
+int Assembler::write(int rd)
 {	
 	form = 0b10111;
+	final = form;
+	final = (final << 2)|rd;
+	final <<= 9;
+
+	return final;
 }
-void Assembler::halt()
+int Assembler::halt()
 {
 	form = 0b11000;
+	final = form;
+	final <<= 11;
+
+	return final;
 }
-void Assembler::noop()
+int Assembler::noop()
 {
 	form = 0b11001;
+	final = form;
+	final <<= 11;
+
+	return final;
 }

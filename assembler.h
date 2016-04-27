@@ -30,48 +30,49 @@ class Assembler{
 	map<string, FP> instr;
 	
 	//	opcodes and their functions
-	void load();
-	void loadi();
-	void store();	
-	void add(); //	These functions will set a CARRY bit to the sr per the SRS
-	void addi();
-	void addc();
-	void addci();
-	void sub();
-	void subi();
-	void subc();
-	void subci();
-	void sysand();
-	void andi();
-	void sysxor();
-	void xori();
-	void syscompl();
-	void shl(); //	This function will set the CARRY bit
-	void shla(); //	This will be the shift left arithmetic and sign extend 
-	void shr(); //	This function will set the CARRY bit
-	void shra(); //	This will be the shift left arithmetic and sign extend 
-	void compr();
-	void compri();
-	void getstat();
-	void putstat();
-	void jump();
-	void jumpl();
-	void jumpe();
-	void jumpg();
-	void call();
-	void sysreturn();
-	void read();
-	void write();
-	void halt();
-	void noop();
+	int load(int rd, int constant);
+	int loadi(int rd, int constant);
+	int store(int rd, int constant);	
+	int add(int rd, int rs); //	These functions will set a CARRY bit to the sr per the SRS
+	int addi(int rd, int constant);
+	int addc(int rd, int rs);
+	int addci(int rd, int constant);
+	int sub(int rd, int rs);
+	int subi(int rd, int constant);
+	int subc(int rd, int rs);
+	int subci(int rd, int constant);
+	int sysand(int rd, int rs);
+	int andi(int rd, int constant);
+	int sysxor(int rd, int rs);
+	int xori(int rd, int constant);
+	int syscompl(int rd);
+	int shl(int rd); //	This function will set the CARRY bit
+	int shla(int rd); //	This will be the shift left arithmetic and sign extend 
+	int shr(int rd); //	This function will set the CARRY bit
+	int shra(int rd); //	This will be the shift left arithmetic and sign extend 
+	int compr(int rd, int rs);
+	int compri(int rd, int constant);
+	int getstat(int rd, int rs);
+	int putstat(int rd, int rs);
+	int jump(int rd, int constant);
+	int jumpl(int rd, int constant);
+	int jumpe(int rd, int constant);
+	int jumpg(int rd, int constant);
+	int call(int rd, int constant);
+	int sysreturn();
+	int read(int rd);
+	int write(int rd);
+	int halt();
+	int noop();
 public:
 	
 	int i;
     int OP;
-	int sr;
-	ifstream assemblyProg;
-	ofstream assemblyOut;
-	int form;
+    int form;
+	int final;
+	//int ext; // this is going to be the extantion to fill out the extra left over bits
+	std::ifstream assemblyProg;
+	std::ofstream assemblyOut;
 	Assembler();
 	//	this is the opcode string that the
 	int assemble(char opFile, char ouFile);

@@ -28,24 +28,27 @@ int main(int argc, char const *argv[])
 	std::fstream inObj;
 	std::fstream outObj;
 	char outputFile[] = "ouFt.o";
-	char inputObject[] = *outputFile;
 	char outputObject[] = "outOBJ.out";
 
 	outF.open(outputFile); 
 	inF.open(argv[1]);
-	as.Assembler::assemble(inF, outF);
-	if (!assemblyProg) {
+	if (!inF.is_open()) {
 		cout << "Your .s failed to open.\n";
 		exit(1);
 	}
+	as.Assembler::assemble(inF, outF);
 	inF.close();
 	outF.close();
 
 	//close *.o for output on assemble AKA argv[]
 	//open *.o for input for virtual machine AKA argv[]
 	
-	inObj.open(inputObject);
+	inObj.open(outputFile);
 	outObj.open(outputObject);
+	if (!inObj.is_open()) {
+		cout << "Your .s failed to open.\n";
+		exit(1);
+	}
 	vm.VirtualMachine::run(inObj, outObj);
 	outObj.close();
 	inObj.close();

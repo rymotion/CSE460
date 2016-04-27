@@ -11,9 +11,24 @@
 #include <fstream>
 
 using namespace std;
-int main()
+int main(int argc, char const *argv[])
 {
 	//first we input the file then we read the file for opcodes, integers(registers), and integers
-	Assembler a;
-	a.assemble();
+	std::fstream inF;
+	std::fstream outF;
+	char outputFile[] = "ouFt.o";
+	outF.open(outputFile);
+	inF.open(argv[1]);
+	if (!inF.is_open()) {
+		cout << "Your .s failed to open. in the assemble prog :<\n";
+		exit(1);
+	}
+	else{
+		Assembler a;
+		a.Assembler::assemble(inF, outF);
+		cout << "input file to assembler = good\n";
+	}
+	inF.close();
+	outF.close();
+	return 0;
 }
