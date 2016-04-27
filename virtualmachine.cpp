@@ -42,7 +42,7 @@ int VirtualMachine::fetch(){
 void VirtualMachine::run(char inObj, char outObj){
 	fstream vmIn;
 	fstream vmOut;
-	outObj[] = "out  " 
+	outObj[] = "out.out" 
 	vmIn.open(inObj, ios::in);
 	vmOut.open(outObj, ios::out);
 	if (!inObj || !outObj) {

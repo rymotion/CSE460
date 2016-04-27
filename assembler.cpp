@@ -54,17 +54,15 @@ Assembler::Assembler()
 	*/
 }
 
-int Assembler::assemble(char opFile, char ouFile)
+int Assembler::assemble(char const opFile, char const ouFile)
 {
-	//char _opfile = opFile;
-	//char _oufile = ouFile;
 	char outputFilename[] = "ouFile.o";
 	string line, opcode;
 	int rd, rs, constant;
 	//remember constant is also address or ADDR
 
-	assemblyProg.open(&opFile, ios::in);
-	assemblyOut.open(&ouFile, ios::out);
+	assemblyProg.open(opFile, ios::in);
+	assemblyOut.open(ouFile, ios::out);
 	if (!assemblyProg) {
 		cout << "Your .s failed to open.\n";
 		exit(1);

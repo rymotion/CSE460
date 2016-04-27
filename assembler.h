@@ -71,10 +71,10 @@ public:
     int form;
 	int final;
 	//int ext; // this is going to be the extantion to fill out the extra left over bits
-	std::ifstream assemblyProg;
-	std::ofstream assemblyOut;
+	std::fstream assemblyProg;
+	std::fstream assemblyOut;
 	Assembler();
 	//	this is the opcode string that the
-	int assemble(char opFile, char ouFile);
+	int assemble(char const opFile, char const ouFile);
 };
 #endif
