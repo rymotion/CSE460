@@ -16,19 +16,18 @@ int main(int argc, char const *argv[])
 	//first we input the file then we read the file for opcodes, integers(registers), and integers
 	std::fstream inF;
 	std::fstream outF;
-	string file = argv[1];
-	char outputFile[] = "ouFt.o";
-	outF.open(outputFile);
+
+	outF.open("outputFile.o", ios::out | ios::binary);
 	inF.open(argv[1]);
 	if (!inF.is_open()) {
 		cout << "Your .s failed to open. in the assemble prog :<\n";
 		exit(1);
 	}
-	else{
-		Assembler a;
-		a.Assembler::assemble(file, outF);
-		cout << "input file to assembler = good\n";
-	}
+	
+	Assembler a;	
+	a.Assembler::assemble(inF, outF);
+	cout << "input file to assembler = good\n";
+	
 	inF.close();
 	outF.close();
 	return 0;

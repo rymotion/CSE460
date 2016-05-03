@@ -36,40 +36,41 @@ public:
 	VirtualMachine();
 	int runtime();//this is going to return the program counter
     int fetch();//this is going to be the instruction regester incrementer
-    void run(char inObj, char outObj);//.o is the input .out is the file we want out
+    int run(fstream& inObj, fstream& outObj);//.o is the input .out is the file we want out
+    void decode();
     void rtClock();//runtime clock of the program
-    void load();
-    void loadi();
-    void store();   
-    void add(); //  These functions will set a CARRY bit to the sr per the SRS
-    void addi();
-    void addc();
-    void addci();
-    void sub();
-    void subi();
-    void subc();
-    void subci();
-    void sysand();
-    void andi();
-    void sysxor();
-    void xori();
-    void syscompl();
-    void shl(); // This function will set the CARRY bit
-    void shla(); //    This will be the shift left arithmetic and sign extend 
-    void shr(); // This function will set the CARRY bit
-    void shra(); //    This will be the shift left arithmetic and sign extend 
-    void compr();
-    void compri();
-    void getstat();
-    void putstat();
-    void jump();
-    void jumpl();
-    void jumpe();
-    void jumpg();
-    void call();
+    void load(int rd, int constant);
+    void loadi(int rd, int constant);
+    void store(int rd, int constant);    
+    void add(int rd, int rs); // These functions will set a CARRY bit to the sr per the SRS
+    void addi(int rd, int constant);
+    void addc(int rd, int rs);
+    void addci(int rd, int constant);
+    void sub(int rd, int rs);
+    void subi(int rd, int constant);
+    void subc(int rd, int rs);
+    void subci(int rd, int constant);
+    void sysand(int rd, int rs);
+    void andi(int rd, int constant);
+    void sysxor(int rd, int rs);
+    void xori(int rd, int constant);
+    void syscompl(int rd);
+    void shl(int rd); // This function will set the CARRY bit
+    void shla(int rd); //    This will be the shift left arithmetic and sign extend 
+    void shr(int rd); // This function will set the CARRY bit
+    void shra(int rd); //    This will be the shift left arithmetic and sign extend 
+    void compr(int rd, int rs);
+    void compri(int rd, int constant);
+    void getstat(int rd, int rs);
+    void putstat(int rd, int rs);
+    void jump(int rd, int constant);
+    void jumpl(int rd, int constant);
+    void jumpe(int rd, int constant);
+    void jumpg(int rd, int constant);
+    void call(int rd, int constant);
     void sysreturn();
-    void read();
-    void write();
+    void read(int rd);
+    void write(int rd);
     void halt();
     void noop();
 };

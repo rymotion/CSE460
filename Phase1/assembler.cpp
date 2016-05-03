@@ -54,208 +54,193 @@ Assembler::Assembler()
 	*/
 }
 
-int Assembler::assemble(char const opFile, char const ouFile)
+int Assembler::assemble(fstream& opFile, fstream& ouFile)
 {
-	char outputFilename[] = "ouFile.o";
 	string line, opcode;
 	int rd, rs, constant;
 	//remember constant is also address or ADDR
-
-	assemblyProg.open(opFile, ios::in);
-	assemblyOut.open(ouFile, ios::out);
-	if (!assemblyProg) {
-		cout << "Your .s failed to open.\n";
-		exit(1);
-	}
-	else{
-
-
-
-	getline(assemblyProg, line);
-	while (!assemblyProg.eof()) {
+	
+	while (!opFile.eof()) {
 		rd=-1; rs=-1; constant=-129; // init to invalid values
 
 		// the following line is the trick
-		istringstream str(line.c_str());
-		str >> opcode;
+		istringstream istr(line.c_str());
+		cout << "Debug: Is reading file" << endl; 
+		istr >> opcode;
 		if (opcode == "load")
 		{
-			str >> rd >> constant;
-			Assembler::load(rd, constant);
+			istr >> rd >> constant;
+			Assembler::load(rd, constant); 
 		}
 		else if (opcode == "loadi")
 		{
-			str >> rd >> constant;
-			Assembler::loadi(rd, constant);
+			istr >> rd >> constant;
+			Assembler::loadi(rd, constant); 
 		}
 		else if (opcode == "store")
 		{
-			str >> rd >> constant;
-			Assembler::store(rd, constant);
+			istr >> rd >> constant;
+			Assembler::store(rd, constant); 
 		}
 		else if (opcode == "add")
 		{
-			str >> rd >> rs;
-			Assembler::add(rd, rs);
+			istr >> rd >> rs;
+			Assembler::add(rd, rs); 
 		}
 		else if (opcode == "addi")
 		{
-			str >> rd >> constant;
-			Assembler::addi(rd, constant);
+			istr >> rd >> constant;
+			Assembler::addi(rd, constant); 
 		}
 		else if (opcode == "addc")
 		{
-			str >> rd >> rs;
-			Assembler::addc(rd, rs);
+			istr >> rd >> rs;
+			Assembler::addc(rd, rs); 
 		}
 		else if (opcode == "addci")
 		{
-			str >> rd >> constant;
-			Assembler::addci(rd, constant);
+			istr >> rd >> constant;
+			Assembler::addci(rd, constant); 
 		}
 		else if (opcode == "sub")
 		{
-			str >> rd >> rs;
-			Assembler::sub(rd, rs);
+			istr >> rd >> rs;
+			Assembler::sub(rd, rs); 
 		}
 		else if (opcode == "subi")
 		{
-			str >> rd >> constant;
-			Assembler::subi(rd, constant);
+			istr >> rd >> constant;
+			Assembler::subi(rd, constant); 
 		}
 		else if (opcode == "subc")
 		{
-			str >> rd >> rs;
-			Assembler::subc(rd, rs);
+			istr >> rd >> rs;
+			Assembler::subc(rd, rs); 
 		}
 		else if (opcode == "subci")
 		{
-			str >> rd >> constant;
-			Assembler::subci(rd, constant);
+			istr >> rd >> constant;
+			Assembler::subci(rd, constant); 
 		}
 		else if (opcode == "and")
 		{
-			str >> rd >> rs;
-			Assembler::sysand(rd, rs);
+			istr >> rd >> rs;
+			Assembler::sysand(rd, rs); 
 		}
 		else if (opcode == "andi")
 		{
-			str >> rd >> constant;
-			Assembler::andi(rd, constant);
+			istr >> rd >> constant;
+			Assembler::andi(rd, constant); 
 		}
 		else if (opcode == "xor")
 		{
-			str >> rd >> rs;
-			Assembler::sysxor(rd, rs);
+			istr >> rd >> rs;
+			Assembler::sysxor(rd, rs); 
 		}
 		else if (opcode == "xori")
 		{
-			str >> rd >> constant;
-			Assembler::xori(rd, constant);
+			istr >> rd >> constant;
+			Assembler::xori(rd, constant); 
 		}
 		else if (opcode == "compl")
 		{
-			str >> rd;
-			Assembler::syscompl(rd);
+			istr >> rd;
+			Assembler::syscompl(rd); 
 		}
 		else if (opcode == "shl")
 		{
-			str >> rd;
-			Assembler::shl(rd);
+			istr >> rd;
+			Assembler::shl(rd); 
 		}
 		else if (opcode == "shla")
 		{
-			str >> rd;
-			Assembler::shla(rd);
+			istr >> rd;
+			Assembler::shla(rd); 
 		}
 		else if (opcode == "shr")
 		{
-			str >> rd;
-			Assembler::shr(rd);
+			istr >> rd;
+			Assembler::shr(rd); 
 		}
 		else if (opcode == "shra")
 		{
-			str >> rd;
-			Assembler::shra(rd);
+			istr >> rd;
+			Assembler::shra(rd); 
 		}
 		else if (opcode == "compr")
 		{
-			str >> rd >> rs;
-			Assembler::compr(rd, rs);
+			istr >> rd >> rs;
+			Assembler::compr(rd, rs); 
 		}
 		else if (opcode == "compri")
 		{
-			str >> rd >> constant;
-			Assembler::compri(rd, constant);
+			istr >> rd >> constant;
+			Assembler::compri(rd, constant); 
 		}
 		else if (opcode == "getstat")
 		{
-			str >> rd >> rs;
-			Assembler::getstat(rd, rs);
+			istr >> rd >> rs;
+			Assembler::getstat(rd, rs); 
 		}
 		else if (opcode == "putstat")
 		{
-			str >> rd >> rs;
-			Assembler::putstat(rd, rs);
+			istr >> rd >> rs;
+			Assembler::putstat(rd, rs); 
 		}
 		else if (opcode == "jump")
 		{
-			str >> rd >> constant;
-			Assembler::jump(rd, constant);
+			istr >> rd >> constant;
+			Assembler::jump(rd, constant); 
 		}
 		else if (opcode == "jumpl")
 		{
-			str >> rd >> constant;
-			Assembler::jumpl(rd, constant);
+			istr >> rd >> constant;
+			Assembler::jumpl(rd, constant); 
 		}
 		else if (opcode == "jumpe")
 		{
-			str >> rd >> constant;
-			Assembler::jumpe(rd, constant);
+			istr >> rd >> constant;
+			Assembler::jumpe(rd, constant); 
 		}
 		else if (opcode == "jumpg")
 		{
-			str >> rd >> constant; 
-			Assembler::jumpg(rd, constant);
+			istr >> rd >> constant; 
+			Assembler::jumpg(rd, constant); 
 		}
 		else if (opcode == "call")
 		{
-			str >> rd >> constant; 
-			Assembler::call(rd, constant);
+			istr >> rd >> constant; 
+			Assembler::call(rd, constant); 
 		}
 		else if (opcode == "return")
 		{
 			//should pop and restore VM status
-			//str >> >>; 
-			Assembler::sysreturn();
+			Assembler::sysreturn(); 
 		}
 		else if (opcode == "read")
 		{
-			str >> rd; 
-			Assembler::read(rd);
+			istr >> rd; 
+			Assembler::read(rd); 
 		}
 		else if (opcode == "write")
 		{
-			str >> rd; 
-			Assembler::write(rd);
+			istr >> rd; 
+			Assembler::write(rd); 
 		}
 		else if (opcode == "halt")
 		{
-			Assembler::halt();
+			Assembler::halt(); 
 			//execute halt
 		}
 		else if (opcode == "noop")
 		{
-			Assembler::noop();
+			Assembler::noop(); 
 		}
-	}
 
 		//this last line will put the results into the output file
-		assemblyOut << final << endl;
-		getline(assemblyProg, line, '!');
+		ouFile << final << endl;
+		getline(opFile, line);
 	}
-	assemblyProg.close();
-	assemblyOut.close();
 	return 1;
 }
 //opcode and their functions
@@ -296,10 +281,11 @@ int Assembler::add(int rd, int constant)
 	form = 0b00010;
 	i = 0b0;
 	final = form;
-	final = (final << 2)|rd;
+	final = (final << 2)|rd;//00010 00 0 01 000000
 	final = (final << 1)|i;
 	final = (final << 8)|constant;
 	return final;
+	//00010 00 0 00000001
 }
 int Assembler::addi(int rd, int constant)
 {

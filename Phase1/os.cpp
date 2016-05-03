@@ -27,29 +27,33 @@ int main(int argc, char const *argv[])
 	std::fstream outF;
 	std::fstream inObj;
 	std::fstream outObj;
-	char outputFile[] = "ouFt.o";
 	char outputObject[] = "outOBJ.out";
+	string opcode;
 
-	outF.open(outputFile); 
+	outF.open("ouFt.o", ios::out | ios::binary); 
 	inF.open(argv[1]);
 	if (!inF.is_open()) {
 		cout << "Your .s failed to open.\n";
 		exit(1);
 	}
+	
 	as.Assembler::assemble(inF, outF);
+
 	inF.close();
 	outF.close();
 
 	//close *.o for output on assemble AKA argv[]
 	//open *.o for input for virtual machine AKA argv[]
 	
-	inObj.open(outputFile);
-	outObj.open(outputObject);
+	inObj.open("ouFt.o", ios::in);
+	outObj.open("outOBJ.out", ios::out | ios::binary);
 	if (!inObj.is_open()) {
 		cout << "Your .s failed to open.\n";
 		exit(1);
 	}
+	
 	vm.VirtualMachine::run(inObj, outObj);
+
 	outObj.close();
 	inObj.close();
 
